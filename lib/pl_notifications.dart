@@ -25,6 +25,7 @@ class PlNotifications {
   CreateWidget _baseWidget =
       (PlNotificationMessage message, Function removeEntry) => Card(
             child: ListTile(
+              leading: message.icon,
               title: Text(message.title ?? ''),
               subtitle: Text(message.subtitle ?? ''),
               dense: true,
@@ -133,12 +134,13 @@ class PlNotifications {
     _removeCurrentEntry();
   }
 
-  ///Schedule a success notification
-  static void showSuccess(
+  ///Schedule a notification message
+  static void showMessage(
     BuildContext context,
     String title, {
     String subtitle,
     Duration duration,
+    Icon icon,
   }) {
     var notifications = PlNotifications.of(context);
     notifications._reset();
@@ -146,9 +148,23 @@ class PlNotifications {
       PlNotificationMessage(
         title,
         duration,
-        icon: Icon(Icons.check),
+        icon: icon,
         subtitle: subtitle,
       ),
     );
+  }
+
+  ///Schedule a success notification
+  static void showError(BuildContext context, String title,
+      {String subtitle, Duration duration}) {
+    showMessage(context, title,
+        subtitle: subtitle, duration: duration, icon: Icon(Icons.error));
+  }
+
+  ///Schedule a success notification
+  static void showSuccess(BuildContext context, String title,
+      {String subtitle, Duration duration}) {
+    showMessage(context, title,
+        subtitle: subtitle, duration: duration, icon: Icon(Icons.check));
   }
 }

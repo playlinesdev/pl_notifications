@@ -1,7 +1,6 @@
 name: pl_notifications
 description: A service to display notifications on the screen using overlays.
-version: 0.0.1
-author:
+version: 0.0.1+1
 homepage: https://playlines.web.app
 repository: https://github.com/playlinesdev/pl_notifications
 
