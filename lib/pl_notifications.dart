@@ -162,10 +162,7 @@ class PlNotifications {
       title,
       subtitle: subtitle,
       duration: duration,
-      icon: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Icon(Icons.error)],
-      ),
+      icon: Icon(Icons.check_box),
     );
   }
 
@@ -177,10 +174,7 @@ class PlNotifications {
       title,
       subtitle: subtitle,
       duration: duration,
-      icon: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Icon(Icons.check_box)],
-      ),
+      icon: Icon(Icons.check_box),
     );
   }
 }
