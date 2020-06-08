@@ -26,8 +26,8 @@ class PlNotifications {
       (PlNotificationMessage message, Function removeEntry) => Card(
             child: ListTile(
               leading: message.icon,
-              title: Text(message.title ?? ''),
-              subtitle: Text(message.subtitle ?? ''),
+              title: message.title,
+              subtitle: message.subtitle,
               dense: true,
               trailing: FlatButton(
                 onPressed: () {
@@ -137,10 +137,10 @@ class PlNotifications {
   ///Schedule a notification message
   static void showMessage(
     BuildContext context,
-    String title, {
-    String subtitle,
+    Widget title, {
+    Widget subtitle,
     Duration duration,
-    Icon icon,
+    Widget icon,
   }) {
     var notifications = PlNotifications.of(context);
     notifications._reset();
@@ -155,16 +155,32 @@ class PlNotifications {
   }
 
   ///Schedule a success notification
-  static void showError(BuildContext context, String title,
-      {String subtitle, Duration duration}) {
-    showMessage(context, title,
-        subtitle: subtitle, duration: duration, icon: Icon(Icons.error));
+  static void showError(BuildContext context, Widget title,
+      {Widget subtitle, Duration duration}) {
+    showMessage(
+      context,
+      title,
+      subtitle: subtitle,
+      duration: duration,
+      icon: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Icon(Icons.error)],
+      ),
+    );
   }
 
   ///Schedule a success notification
-  static void showSuccess(BuildContext context, String title,
-      {String subtitle, Duration duration}) {
-    showMessage(context, title,
-        subtitle: subtitle, duration: duration, icon: Icon(Icons.check));
+  static void showSuccess(BuildContext context, Widget title,
+      {Widget subtitle, Duration duration}) {
+    showMessage(
+      context,
+      title,
+      subtitle: subtitle,
+      duration: duration,
+      icon: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Icon(Icons.check_box)],
+      ),
+    );
   }
 }
