@@ -37,8 +37,8 @@ class _PlNotificationContainerState extends State<PlNotificationContainer> {
     super.initState();
     duration = widget.duration;
     curve = widget.curve;
-    width = widget.width / 2;
-    height = widget.height / 2;
+    width = widget?.width / 2;
+    height = widget?.height / 2;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         child = widget.child;

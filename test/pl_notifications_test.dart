@@ -11,21 +11,24 @@ class Example extends StatelessWidget {
       persistentFooterButtons: <Widget>[
         FlatButton.icon(
           onPressed: () {
-            PlNotifications.showSuccess(context, 'title');
+            PlNotifications.showSuccess(context, 'title',
+                subtitle: 'A success subtitle');
           },
           icon: Icon(Icons.check_box, color: Colors.green),
           label: Text('Success Notification'),
         ),
         FlatButton.icon(
           onPressed: () {
-            PlNotifications.showError(context, 'title');
+            PlNotifications.showError(context, 'title',
+                subtitle: 'An error subtitle');
           },
           icon: Icon(Icons.error, color: Colors.red),
           label: Text('Error Notification'),
         ),
         FlatButton.icon(
           onPressed: () {
-            PlNotifications.showMessage(context, Text('title'));
+            PlNotifications.showMessage(context, Text('title'),
+                subtitle: Text('A custom subtitle'));
           },
           icon: Icon(Icons.message),
           label: Text('Regular Notification'),

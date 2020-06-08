@@ -97,13 +97,14 @@ class PlNotifications {
         : firstMessage.duration;
 
     _currentKey = Key(DateTime.now().millisecondsSinceEpoch.toString());
+    Widget notificationWidget = _baseWidget(firstMessage, _removeCurrentEntry);
     _currentEntry = _createEntry(
       Stack(
         children: <Widget>[
           Align(
             alignment: _alignment,
             child: PlNotificationContainer(
-              _baseWidget(firstMessage, _removeCurrentEntry),
+              notificationWidget,
               Duration(milliseconds: 400),
               width: size.width,
               height: size.height,
@@ -210,8 +211,8 @@ class PlNotifications {
       {String subtitle, Duration duration, Color color = Colors.red}) {
     showMessage(
       context,
-      Text(title),
-      subtitle: Text(subtitle),
+      Text(title ?? ''),
+      subtitle: Text(subtitle ?? ''),
       duration: duration,
       icon: Icon(Icons.error, color: color),
     );
@@ -222,8 +223,8 @@ class PlNotifications {
       {String subtitle, Duration duration, Color color = Colors.green}) {
     showMessage(
       context,
-      Text(title),
-      subtitle: Text(subtitle),
+      Text(title ?? ''),
+      subtitle: Text(subtitle ?? ''),
       duration: duration,
       icon: Icon(Icons.check_box, color: color),
     );
