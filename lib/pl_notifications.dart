@@ -8,7 +8,7 @@ typedef Duration GetDuration(PlNotificationMessage message);
 typedef Widget CreateWidget(
     PlNotificationMessage message, Function removeEntryFunction);
 typedef Size PlNotificationSize(BuildContext context);
-typedef Widget BasicBuilder(Size screenSize);
+typedef Widget BasicBuilder(Size screenSize, Function closeNotification);
 
 ///Service class to present notifications
 class PlNotifications {
@@ -178,10 +178,40 @@ class PlNotifications {
   }
 
   ///A shortcut for showing custom notifications
+  ///* [builder] A function that receives the size of the screen based on the passed context
+  ///and a function to invoke that manually closes the notification to use in a close button
+  ///Example:
+  ///```dart
+  ///PlNotifications.showWidgetNotification(context,
+  ///      (screenSize, closeNotification) {
+  ///    double halfScreenWidth = screenSize.width / 2;
+  ///
+  ///   return Padding(
+  ///  padding: const EdgeInsets.only(
+  ///   top: 100), //shows the notification 100 pixels from top
+  /// child: Card(
+  /// child: Container(
+  /// width: halfScreenWidth,
+  /// height: 40,
+  /// child: ListTile(
+  ///              title: Text('A test of custom notification'),
+  ///           trailing: FlatButton.icon(
+  ///            onPressed: () {
+  ///           closeNotification();
+  ///      },
+  ///   icon: Icon(Icons.close),
+  ///                  label: Text('Close Notification')),
+  ///         ),
+  ///    ),
+  ///));});
+  ///```
   static void showWidgetNotification(
       BuildContext context, BasicBuilder builder) {
     var size = MediaQuery.of(context).size;
-    showCustomNotification(context, builder: (nm) => builder(size));
+    var closeNotificationFunction =
+        PlNotifications.of(context)._removeCurrentEntry;
+    showCustomNotification(context,
+        builder: (nm) => builder(size, closeNotificationFunction));
   }
 
   ///Main method for showing notifications where you can pass all the parameters
