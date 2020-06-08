@@ -8,10 +8,12 @@ class PlNotificationMessage {
   final Widget title;
   final Widget subtitle;
   final Duration duration;
-  PlNotificationMessage(
+  final Widget Function(PlNotificationMessage) builder;
+  PlNotificationMessage({
     this.title,
-    this.duration, {
+    this.duration,
     this.icon,
     this.subtitle,
+    this.builder,
   });
 }
