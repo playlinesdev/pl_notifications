@@ -90,7 +90,7 @@ class PlNotifications {
     if (_notificationMessages.isEmpty) return;
     var firstMessage = _notificationMessages.removeAt(0);
     var size = firstMessage.builder != null
-        ? Size(null, null)
+        ? MediaQuery.of(context).size
         : _notificationSize(context);
     Duration duration = firstMessage.duration == null
         ? _baseDuration(firstMessage)
