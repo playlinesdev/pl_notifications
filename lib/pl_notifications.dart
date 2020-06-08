@@ -8,7 +8,7 @@ typedef Duration GetDuration(PlNotificationMessage message);
 typedef Widget CreateWidget(
     PlNotificationMessage message, Function removeEntryFunction);
 typedef Size PlNotificationSize(BuildContext context);
-typedef Widget BasicBuilder();
+typedef Widget BasicBuilder(Size screenSize);
 
 ///Service class to present notifications
 class PlNotifications {
@@ -89,7 +89,9 @@ class PlNotifications {
   void show() {
     if (_notificationMessages.isEmpty) return;
     var firstMessage = _notificationMessages.removeAt(0);
-    var size = _notificationSize(context);
+    var size = firstMessage.builder != null
+        ? Size(null, null)
+        : _notificationSize(context);
     Duration duration = firstMessage.duration == null
         ? _baseDuration(firstMessage)
         : firstMessage.duration;
@@ -177,7 +179,8 @@ class PlNotifications {
   ///A shortcut for showing custom notifications
   static void showWidgetNotification(
       BuildContext context, BasicBuilder builder) {
-    showCustomNotification(context, builder: (nm) => builder());
+    var size = MediaQuery.of(context).size;
+    showCustomNotification(context, builder: (nm) => builder(size));
   }
 
   ///Main method for showing notifications where you can pass all the parameters
