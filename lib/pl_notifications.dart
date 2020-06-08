@@ -24,17 +24,24 @@ class PlNotifications {
   GetDuration _baseDuration = (message) => Duration(seconds: 3);
   CreateWidget _baseWidget =
       (PlNotificationMessage message, Function removeEntry) => Card(
-            child: ListTile(
-              leading: message.icon,
-              title: message.title,
-              subtitle: message.subtitle,
-              dense: true,
-              trailing: FlatButton(
-                onPressed: () {
-                  removeEntry();
-                },
-                child: Icon(Icons.close, size: 15),
-              ),
+            child: Stack(
+              children: <Widget>[
+                ListTile(
+                  leading: message.icon,
+                  title: message.title,
+                  subtitle: message.subtitle,
+                  dense: true,
+                ),
+                Positioned(
+                  right: 10,
+                  child: FlatButton(
+                    onPressed: () {
+                      removeEntry();
+                    },
+                    child: Icon(Icons.close, size: 15),
+                  ),
+                )
+              ],
             ),
           );
 
@@ -162,7 +169,7 @@ class PlNotifications {
       title,
       subtitle: subtitle,
       duration: duration,
-      icon: Icon(Icons.check_box),
+      icon: Icon(Icons.error),
     );
   }
 
