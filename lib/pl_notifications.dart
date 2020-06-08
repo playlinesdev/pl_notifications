@@ -8,6 +8,7 @@ typedef Duration GetDuration(PlNotificationMessage message);
 typedef Widget CreateWidget(
     PlNotificationMessage message, Function removeEntryFunction);
 typedef Size PlNotificationSize(BuildContext context);
+typedef Widget BasicBuilder();
 
 ///Service class to present notifications
 class PlNotifications {
@@ -23,27 +24,30 @@ class PlNotifications {
   };
   GetDuration _baseDuration = (message) => Duration(seconds: 3);
   CreateWidget _baseWidget =
-      (PlNotificationMessage message, Function removeEntry) => Card(
-            child: Stack(
-              children: <Widget>[
-                ListTile(
-                  leading: message.icon,
-                  title: message.title,
-                  subtitle: message.subtitle,
-                  dense: true,
-                ),
-                Positioned(
-                  right: 10,
-                  child: FlatButton(
-                    onPressed: () {
-                      removeEntry();
-                    },
-                    child: Icon(Icons.close, size: 15),
+      (PlNotificationMessage message, Function removeEntry) =>
+          message.builder != null
+              ? message.builder(message)
+              : Card(
+                  child: Stack(
+                    children: <Widget>[
+                      ListTile(
+                        leading: message.icon,
+                        title: message.title,
+                        subtitle: message.subtitle,
+                        dense: true,
+                      ),
+                      Positioned(
+                        right: 10,
+                        child: FlatButton(
+                          onPressed: () {
+                            removeEntry();
+                          },
+                          child: Icon(Icons.close, size: 15),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-          );
+                );
 
   static PlNotifications _instance;
 
@@ -149,39 +153,76 @@ class PlNotifications {
     Duration duration,
     Widget icon,
   }) {
+    showCustomNotification(
+      context,
+      title: title,
+      subtitle: subtitle,
+      duration: duration,
+      icon: icon,
+    );
+  }
+
+  ///Schedule an info notification
+  static void showInfo(BuildContext context, Widget title,
+      {Widget subtitle, Duration duration, Color color = Colors.blue}) {
+    showMessage(
+      context,
+      title,
+      subtitle: subtitle,
+      duration: duration,
+      icon: Icon(Icons.info, color: color),
+    );
+  }
+
+  ///A shortcut for showing custom notifications
+  static void showWidgetNotification(BuildContext context,
+      {BasicBuilder builder}) {
+    showCustomNotification(context, builder: (nm) => builder());
+  }
+
+  ///Main method for showing notifications where you can pass all the parameters
+  static void showCustomNotification(
+    BuildContext context, {
+    Widget Function(PlNotificationMessage message) builder,
+    Widget title,
+    Widget subtitle,
+    Widget icon,
+    Duration duration,
+  }) {
     var notifications = PlNotifications.of(context);
     notifications._reset();
     notifications._add(
       PlNotificationMessage(
-        title,
-        duration,
+        title: title,
+        duration: duration,
         icon: icon,
         subtitle: subtitle,
+        builder: builder,
       ),
     );
   }
 
   ///Schedule a success notification
-  static void showError(BuildContext context, Widget title,
-      {Widget subtitle, Duration duration}) {
+  static void showError(BuildContext context, String title,
+      {String subtitle, Duration duration, Color color = Colors.red}) {
     showMessage(
       context,
-      title,
-      subtitle: subtitle,
+      Text(title),
+      subtitle: Text(subtitle),
       duration: duration,
-      icon: Icon(Icons.error),
+      icon: Icon(Icons.error, color: color),
     );
   }
 
   ///Schedule a success notification
-  static void showSuccess(BuildContext context, Widget title,
-      {Widget subtitle, Duration duration}) {
+  static void showSuccess(BuildContext context, String title,
+      {String subtitle, Duration duration, Color color = Colors.green}) {
     showMessage(
       context,
-      title,
-      subtitle: subtitle,
+      Text(title),
+      subtitle: Text(subtitle),
       duration: duration,
-      icon: Icon(Icons.check_box),
+      icon: Icon(Icons.check_box, color: color),
     );
   }
 }
