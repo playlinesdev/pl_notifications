@@ -20,7 +20,6 @@ PlNotifications.showMessage(
 );
 ```
 
-
 <img src="https://github.com/playlinesdev/pl_notifications/blob/master/mobile_test.gif?raw=true"/>
 
 <img src="https://github.com/playlinesdev/pl_notifications/blob/master/web_test.gif?raw=true"/>
