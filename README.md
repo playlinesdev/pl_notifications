@@ -11,5 +11,11 @@ flutter packages get
 command, for importing the package and use just like so
 
 ```dart
-PlNotifications.show
+PlNotifications.showMessage(
+    context,
+    Text('A title'),
+    subtitle: Text('A subtitle'),
+    Duration(seconds: 5),
+    icon: Icon(Icons.error),
+);
 ```
