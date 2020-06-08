@@ -175,8 +175,8 @@ class PlNotifications {
   }
 
   ///A shortcut for showing custom notifications
-  static void showWidgetNotification(BuildContext context,
-      {BasicBuilder builder}) {
+  static void showWidgetNotification(
+      BuildContext context, BasicBuilder builder) {
     showCustomNotification(context, builder: (nm) => builder());
   }
 
