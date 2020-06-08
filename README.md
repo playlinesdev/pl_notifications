@@ -19,3 +19,8 @@ PlNotifications.showMessage(
     icon: Icon(Icons.error),
 );
 ```
+
+On mobile
+<img src="https://github.com/playlinesdev/pl_notifications/blob/master/mobile_test.gif?raw=true" width="240" height="400"/>
+
+On Web
