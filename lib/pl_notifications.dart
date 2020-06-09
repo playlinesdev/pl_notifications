@@ -166,12 +166,12 @@ class PlNotifications {
   }
 
   ///Schedule an info notification
-  static void showInfo(BuildContext context, Widget title,
-      {Widget subtitle, Duration duration, Color color = Colors.blue}) {
+  static void showInfo(BuildContext context, String title,
+      {String subtitle, Duration duration, Color color = Colors.blue}) {
     showMessage(
       context,
-      title,
-      subtitle: subtitle,
+      Text(title ?? ''),
+      subtitle: Text(subtitle ?? ''),
       duration: duration,
       icon: Icon(Icons.info, color: color),
     );
